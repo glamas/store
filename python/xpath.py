@@ -76,7 +76,7 @@ while fetch_time>0:
             img_url = img_store_url
             
           #停一秒钟请求一次
-          time.sleep(0.3)
+          time.sleep(1)
           try:
               image_data = opener.open(img_url)
           except urllib.error.HTTPError as err1:
