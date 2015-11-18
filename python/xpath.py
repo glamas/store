@@ -39,7 +39,7 @@ opener.addheaders = [('User-agent','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537
 
 max_pin = None
 limit = 20
-fetch_time = 5
+fetch_time = 1
 
 while fetch_time>0:
   fetch_time = fetch_time-1
@@ -113,5 +113,4 @@ while fetch_time>0:
           f.close()
         break
   print(max_pin)
-
 
