@@ -11,53 +11,77 @@ import queue
 import threading
 import time
 
-exitFlag = 0
 
 class myThread (threading.Thread):
-    def __init__(self, threadID, name, q):
+    '''
+    require:
+        threadID
+        name
+        queue       :list parameter for callback function
+    option:
+        lock        :class threading.Lock() for lock proceding data
+    '''
+    def __init__(self, threadID, name, queue,lock=None):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
-        self.q = q
+        self.queue = queue
+        self.lock = lock
+        self.exitFlag = False
     def run(self):
-        print("Starting " + self.name)
-        process_data(self.name, self.q)
-        print("Exiting " + self.name)
+        while not self.exitFlag:
+            if self.lock:
+                self.lock.acquire()
+            if not self.queue.empty():
+                item = self.queue.get()
+                if self.lock:
+                    self.lock.release()
+                ## call function
+                print("%s processing %s" % (self.name, item))
+                time.sleep(1)
 
-def process_data(threadName, q):
-    while not exitFlag:
-        queueLock.acquire()
-        if not workQueue.empty():
-            data = q.get()
-            queueLock.release()
-            print("%s processing %s" % (threadName, data))
-        else:
-            queueLock.release()
-        time.sleep(1)
+            else:
+                if self.lock:
+                    self.lock.release()
+            
+    def end(self):
+        self.exitFlag = True
+
+
 
 if __name__ == "__main__":
+    '''
+    1.将数据保存到queue
+    2.启动线程(传入锁,可选)
+    3.主线程活动(处理queue,可选)
+    4.对每个线程调用self.end()通知结束线程
+    5.对每个线程调用self.join()等待线程结束
+    '''
     threadList = ["Thread-1", "Thread-2", "Thread-3"]
     nameList = ["One", "Two", "Three", "Four", "Five"]
     queueLock = threading.Lock()
     workQueue = queue.Queue(10)
     threads = []
     threadID = 1
-    
+   
+    queueLock.acquire()
+    for word in nameList:
+        workQueue.put(word)
+    queueLock.release() 
+
     for tName in threadList:
-        thread = myThread(threadID, tName, workQueue)
+        thread = myThread(threadID, tName, workQueue,queueLock)
         thread.start()
         threads.append(thread)
         threadID += 1
 
-    queueLock.acquire()
-    for word in nameList:
-        workQueue.put(word)
-    queueLock.release()
 
     while not workQueue.empty():
         pass
 
-    exitFlag = 1
+    for thread in threads:
+        thread.end()
+
 
     for t in threads:
         t.join()
