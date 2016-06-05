@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #-*- coding: UTF-8 -*-
 
 import io
@@ -29,10 +30,9 @@ def get_html(opener,url,alert=False):
         else:
             raise
 
-def save_html(stream,filename,path):
-    f = open(path+'/'+filename,'w',encoding='utf8')
-    f.write(stream.decode('utf8'))
-    f.close()
+def save_html(stream,filename,path='.'):
+    with open(path+'/'+filename,'w',encoding='utf8') as f:
+        f.write(stream.decode('utf8'))
 
 if __name__ ==  "__main__":
     save_dir = os.getcwd()+'/bing'
