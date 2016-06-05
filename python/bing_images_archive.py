@@ -73,12 +73,10 @@ short_desc:{short_desc}
         if os.path.exists(save_dir+"/"+info_href+".jpg") is True:
             continue
         image_data = get_html(opener,image_url,True)
-        f = open(save_dir+"/"+info_href+".jpg","wb")
-        f.write(image_data.read())
-        f.close()
+        with open(save_dir+"/"+info_href+".jpg","wb") as f:
+            f.write(image_data.read())
 
         #保存图片信息
-        f = open(info_dir+"/"+info_href+".txt","w",encoding="utf8")
-        f.write(info_data.format(title=info_title,filename=info_href,date=info_href,country=info_class,short_desc=short_desc))
-        f.close()
+        with open(info_dir+"/"+info_href+".txt","w",encoding="utf8") as f:
+            f.write(info_data.format(title=info_title,filename=info_href,date=info_href,country=info_class,short_desc=short_desc))
 
