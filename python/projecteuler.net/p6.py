@@ -1,16 +1,7 @@
+#!/usr/bin/python
 #-*- coding: UTF-8 -*-
 
-def sum_square(n):
-    '''formular:
-    Ek^2 = n*(n+1)*(2*n+1)//6
-'''
-    return n*(n+1)*(2*n+1)//6
-
-def sum_num(n):
-    '''formular:
-    Ek = n*(n+1)//2
-'''
-    return n*(n+1)//2
+from common_func import *
 
 if __name__ == "__main__":
     '''The sum of the squares of the first ten natural numbers is,
@@ -27,5 +18,5 @@ Find the difference between the sum of the squares of the first one hundred natu
     result = sum_num(start)
     result *= result
     result = result-sum_square(start)
-    
-    print(result)   
+
+    print(result)

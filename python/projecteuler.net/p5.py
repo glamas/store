@@ -1,12 +1,7 @@
+#!/usr/bin/python
 #-*- coding: UTF-8 -*-
 
-def gcd(m,n):
-    if m < n:
-        m,n = n,m
-    if m % n == 0:
-        return n
-    else:
-        return gcd(n,m%n)
+from common_func import *
 
 if __name__ == "__main__":
     '''2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.

@@ -1,11 +1,7 @@
+#!/usr/bin/python
 #-*- coding: UTF-8 -*-
 
-def is_palindromic(num):
-    strNum = str(num)
-    strRvsNum = strNum[::-1]
-    if strNum == strRvsNum:
-        return 1
-    return 0
+from common_func import *
 
 if __name__ == "__main__":
     '''A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
