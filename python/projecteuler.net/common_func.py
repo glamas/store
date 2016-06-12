@@ -57,3 +57,24 @@ def sum_num(n):
     Ek = n*(n+1)//2
 '''
     return n*(n+1)//2
+
+def is_squares(num):
+    ''' for python2.x division need be float
+    2分法快速找到最接近num的平方数,
+    然后使用逼近法得到最近的平方数,由num=(a+b)^2 =a^2+2ab+b^2,舍弃b^2项,可以得到b=(num-a^2)/(2*a),
+    如果|b|>1,将a修正为a+b,带入刚才的算式,直到|b|<1,
+    在判断a^2,(a+b)^2和num的大小
+    '''
+    i = 2
+    while(num <= (num//i)*(num//i)):
+        i = i * 2
+    m = int(num//i)
+    k = (num-m*m)/2.0/m
+    while ( k >= 1.0 or k <= -1.0 ):
+        m = int(m + k)
+        k = (num-m*m)/2.0/m
+    if num == m*m:
+        return True
+    else:
+        return False
+
