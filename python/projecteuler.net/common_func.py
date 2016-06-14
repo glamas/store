@@ -3,6 +3,7 @@
 
 from math import sqrt,floor
 
+# 判断素数
 def is_prime(num):
     '''https://zh.wikipedia.org/wiki/%E7%B4%A0%E6%80%A7%E6%B5%8B%E8%AF%95
 '''
@@ -19,9 +20,11 @@ def is_prime(num):
         iNum += 2
     return 1
 
+# 计算小于m并且能被n整除的所有数字只和
 def sum_n_bellow_m(n,m):
     return (n/2)*((m-1)//n)*((m-1)//n+1)
 
+# 奇数的febonacci数之和
 def sum_even_febonacci(max):
     a,b = 1,2
     sum = b
@@ -31,6 +34,7 @@ def sum_even_febonacci(max):
             sum+=b
     return sum
 
+# 判断回文数
 def is_palindromic(num):
     strNum = str(num)
     strRvsNum = strNum[::-1]
@@ -38,6 +42,7 @@ def is_palindromic(num):
         return 1
     return 0
 
+# 最大公约数
 def gcd(m,n):
     if m < n:
         m,n = n,m
@@ -46,18 +51,21 @@ def gcd(m,n):
     else:
         return gcd(n,m%n)
 
+# 求平方和
 def sum_square(n):
     '''formular:
     Ek^2 = n*(n+1)*(2*n+1)//6
 '''
     return n*(n+1)*(2*n+1)//6
 
+# 求整数和
 def sum_num(n):
     '''formular:
     Ek = n*(n+1)//2
 '''
     return n*(n+1)//2
 
+# 是否平方数
 def is_squares(num):
     ''' for python2.x division need be float
     2分法快速找到最接近num的平方数,
@@ -77,4 +85,17 @@ def is_squares(num):
         return True
     else:
         return False
+
+# 统计num的因子个数
+def count_divisor(num):
+    start = 1
+    count = 0
+    while start <= num//start :
+        if num % start == 0:
+            if start == num//start:
+                count += 1
+            else:
+                count += 2
+        start += 1
+    return count
 
