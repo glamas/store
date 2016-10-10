@@ -57,3 +57,11 @@ pi
 ;;分数
 (numerator num)  ;;返回分数的分子部分
 (denominator num)  ;;返回分数的分母部分
+
+;;虚数
+(complex real [imag])  ;;创建一个虚数
+(realpart number)  ;;返回虚数的实数部分
+(imagpart number)  ;;返回虚数的虚数部分
+(phase number)     ;;返回虚数相位角
+(abs n)            ;;返回虚数长度,或者n的绝对值
+
