@@ -20,7 +20,7 @@
 
 ;;注:
 ;;    defvar,defconstant,defparameter都是全局变量
-;;    并且仅在foo没定义的时候生效,重复定义无效
+;;    并且,defvar和defconstant仅在foo没定义的时候生效,重复定义无效
 
 ;;设置变量
 (setf foo form)  ;;设置foo的新值,返回form的值
