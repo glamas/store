@@ -1,6 +1,7 @@
 00-base-syntax
     define_or_set
     list_array_hash
+    string
     math_compute
     condition_if
     loop
