@@ -1,11 +1,14 @@
-;;输入输出和文件操作
+s;;输入输出和文件操作
 ;;参考:http://www.yiibai.com/lisp/lisp_input_output.html
 
 ;print,prin1,princ,pprint
 ;(print foo [stream])
-;打印变量到stream,默认是标准输出.print,prin1,princ会返回foo.相当于输出两次?
-;print 先打印一个换行符,再打印变量,最后输出一个空格.返回变量foo
-;prin1 仅打印变量,并返回变量foo
+;打印变量到stream,默认是标准输出.
+;三者都将foo作为返回值(在top-level输出两次)
+;区别:
+;    print 会先打印一个换行符,其他两个不会
+;    prin1 给程序产生输出
+;    princ 给人类产生输出,prin1会给字符串加上双引号,princ不会
 (print '(1 2 3))
 
 ;princ-to-string,prin1-to-sting
@@ -125,4 +128,66 @@
 ;(y-or-n-p [control arg*]) 或者
 ;(yes-or-no-p [control arg*]) 其中的[control arg*]可选,类似于format的格式化输出.用来提示
 (y-or-n-p "Another? [y/n]: ")
+
+;(read [stream | *standard-input*] [eof-err [eof-val [recursive-p]]])
+;read,read-char,read-line 三个类似.stream通常来自文件或其他流.
+;eof-err默认为T,表示遇到end of file报错,当eof-err为nil时,遇到eof时返回eof-val
+;recursive-p 参考226文档,默认为nil
+(with-input-from-string (is "0123")
+			(do ((c (read-char is) (read-char is nil 'the-end)))
+			    ((not (characterp c)))
+			    (format t "~S " c))) ;-> #\0 #\1 #\2 #\3
+;技巧:标准输入时不需要后面的参数;标准输入时最好给于足够的文字信息提示,这三个方法会停住等待输入,会误以为程序卡住
+
+;(read-byte [stream] [eof-err [eof-val]])
+;用来读取二进制数据
+
+;(read-from-string string [eof-err [eof-val]] :start 0 :end nil :preserve-whitespace nil)
+;用于从字符串读取,带有3个关键字参数,start是开始索引,从0开始,end是结束索引
+
+;(write-char char [stream | *standard-output*])
+;输出char到stream
+
+;(write-string string [stream | *standard-output*] :start 0 :end nil)
+;write-string 和write-line 作用相同,都是将string输出到stream,前者不输出换行,后者输出换行
+
+;(write-byte byte stream)
+;输出二进制到stream
+
+;write和write-to-string
+;(write foo :stream stream | *standard-output* ) 
+;还有很多关键词参数,具体参考手册,例如 :length int|nil ,:lines int|nil
+
+;文件操作
+;(open path :direction [:input |:output |:io |:probe] 
+;           :element-type [type |default] 
+;           :if-exists [:new-version |:error |:rename |:rename-and-delete |:overwrite |:append |:supersede | nil]
+;           :if-does-not-exist [:error |:create | nil]
+;           :external-format format)
+;打开path对应的文件,返回stream.其中
+;  :direction 默认:input
+;  :element-type 默认character
+;  :if-exists 默认:new-version
+;  :if-does-not-exists 如果:direction :probe 默认为nil,其他为[:create |:error]
+;对于:probe,仅测试文件是否存在
+;对于:direction是:input或:probe,:if-exists参数无效.
+;对:if-exists和:if-does-not-exist,nil不返回文件流,仅返回nil表示错误
+;对:if-exists,:rename-and-delete会重命名文件并删除? :supersede表示替换
+
+;(close stream [:abort nil])
+;关闭文件流,如果stream已经被打开,返回T;如果:abort设置为T,关闭的同时删除文件)
+
+;注:open需要搭配close使用,为避免没有close,建议使用with-open-file
+;(with-open-file (stream path open-arg*) (declare decl) form*)
+;作为临时文件打开path,文件流名称为stream,open-arg*对应(open)的关键字参数,后面可以执行多个语句,最后返回form*的值
+
+;路径和文件名
+;(make-pathname :host {host |nil |:unspecific}
+;               :device {device |nil |:unspecific}
+;               :directory {directory |:wild |nil |:unspecific} {:absolute |:relative}{directory |:wild |:wild-inferiors |:up |:back}
+;               :name {filename |:wild |nil |:unspecific}
+;               :type {file-type |:wild |nil |:unspecific}
+;               :version {:newest |version |nil |:unspecific}
+;               :defaults path 
+;               :case {:local |:common}
 
