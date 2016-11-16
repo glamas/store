@@ -1,4 +1,4 @@
-s;;输入输出和文件操作
+;;输入输出和文件操作
 ;;参考:http://www.yiibai.com/lisp/lisp_input_output.html
 
 ;print,prin1,princ,pprint
@@ -26,6 +26,9 @@ s;;输入输出和文件操作
 ;如果不是在一行开始,fresh-line返回T,否则nil
 (terpri)
 
+;变量输出,常用于检查(?)
+;(describe foo [stream |*standard-output*])
+;(describe-object foo [stream |*standard-output*])
 
 ;format宏
 ;(format [T | NIL | out-string | out-stream] control arg*)
@@ -190,4 +193,39 @@ s;;输入输出和文件操作
 ;               :version {:newest |version |nil |:unspecific}
 ;               :defaults path 
 ;               :case {:local |:common}
+;详细说明还是看226文档,这里简单说一下
+;对于windows的磁盘路径,比如c:/,在:device设置
+;对于:directory,如果参数为字符串,默认是绝对路径,如果有多层目录,使用列表,并且第一个元素是:absolute或者:relative.
+;使用:name和:type来表示带后缀的文件
+;对于:case,默认为:local,如果设置为:common,会把路径,文件名和后缀大写(?)但:device不会
+;对于:directory,:name,:type,参数:wild表示通配符
+(princ 
+ (make-pathname 
+  :device "c"
+  :directory '(:absolute "public" "game")
+  :name "game"
+  :type "lisp"))
+;该函数返回一个object.
+;以下函数对pathname对象进行部分读取:
+;pathname-host,pathname-device,pathname-directory,pathname-name,pathname-type,pathname-version
+;
+;(parse-namestring foo) 可以将路径字符串foo转换为pathname对象
+;同(pathname foo)?
+;
+;两个常用路径函数:
+;(merge-pathnames path1 path2)  合并为path2/path1，如果path2为是路径
+;(enough-namestring #p"/root/a/b"  #p"/root/a/")  从第一路径中去除第二路径
 
+;文件工具函数
+;(probe-file file)    ;如果文件存在,返回文件路径,否则返回nil或者file_error信号
+;(truenames file)      ;同probe-file
+;
+;(file-write-date file)    ;返回更新时间戳.注意:和unix时间戳不同,这个从1900年开始计算,可以使用decode-universal-time或者get-decoded-time返回解析后的日期列表
+;(file-auth file)          ;返回文件所有者
+;(file-length {file |stream})        ;返回文件的字节数
+;(rename-file foo bar)     ;修改文件foo为bar
+;(delete-file file)        ;删除文件
+;
+;(directory path) ;返回path的文件列表.注意:path允许pathname对象,也可以是路径字符串.单单到文件夹不会显示目录下的文件,需要使用通配附(pathname的:wild,字符串的*)
+;(ensure-directories-exist path [:verbose bool])    ;创建文件夹,如果不存在.返回两个值,如果文件夹创建则第二个返回值为T
+;注:然而,没有找到专门删除文件夹的函数,emacs好像自带(delete-directory path)
