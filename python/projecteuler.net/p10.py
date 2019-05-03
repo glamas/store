@@ -14,4 +14,4 @@ if __name__ == "__main__":
         if is_prime(m):
             result += m
         m +=2
-    print result
+    print(result)

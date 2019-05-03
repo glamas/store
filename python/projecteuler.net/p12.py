@@ -28,5 +28,4 @@ What is the value of the first triangle number to have over five hundred divisor
             break
         index += 1
         triangle = triangle + index
-    print triangle
-        
+    print(triangle)

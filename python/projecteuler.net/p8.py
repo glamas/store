@@ -1,20 +1,22 @@
 #!/usr/bin/python
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from common_func import *
 
+
 def adjacent_product(digits):
-    index = digits.find('0')
+    index = digits.find("0")
     if index != -1:
-        return (0,index)
+        return (0, index)
     else:
         product = 1
         for i in digits:
             product *= int(i)
-        return (product,index)
+        return (product, index)
+
 
 if __name__ == "__main__":
-    '''The four adjacent digits in the 1000-digit number that have the greatest product are 9 × 9 × 8 × 9 = 5832.
+    """The four adjacent digits in the 1000-digit number that have the greatest product are 9 × 9 × 8 × 9 = 5832.
 
 73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
@@ -37,7 +39,7 @@ if __name__ == "__main__":
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450
 
-Find the thirteen adjacent digits in the 1000-digit number that have the greatest product. What is the value of this product?'''
+Find the thirteen adjacent digits in the 1000-digit number that have the greatest product. What is the value of this product?"""
 
     digits = "73167176531330624919225119674426574742355349194934\
 96983520312774506326239578318016984801869478851843\
@@ -62,9 +64,9 @@ Find the thirteen adjacent digits in the 1000-digit number that have the greates
     i = 0
     count = 13
     max_product = 0
-    while( i < len(digits) - count ):
-        s = digits[i:i + count]
-        product,index = adjacent_product(s)
+    while i < len(digits) - count:
+        s = digits[i : i + count]
+        product, index = adjacent_product(s)
         if product == 0:
             i = i + index + 1
         else:
