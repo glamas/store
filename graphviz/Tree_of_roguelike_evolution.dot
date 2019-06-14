@@ -1,0 +1,64 @@
+digraph G {
+    //dpi=200;
+    concentrate=true;
+    splines=ortho;
+
+    graph[label="Tree of roguelike evolution\nhttp://www.roguebasin.com/index.php?title=Tree_of_roguelike_evolution", labelloc=t, labeljust=l]
+
+    // define node and rank
+    {
+        node[shape="none",height=0,width=0];
+        {
+            rank="same";
+            Moria, Larn, Omega, Hack, Brogue
+        }
+        {
+            rank="same";
+            Angband, NetHack,Telengard, DotND
+        }
+        {
+            rank="same";
+            ToME, ZAngband, ADOM, ZapM, Slashem, Crawl, RND, ADND
+        }
+        {
+            rank="same";
+            //Telengard, DotND
+        }
+
+        Rogue;
+        Slashem[label="SLASH'EM"];
+        dnd_plato[label="DND (PLATO)"];
+        Moria_2 [label="Moria"];
+        DND, Oubliette, Avatar, Mordor, Demise;
+    }
+    // define edge
+    {
+        node [shape=none,width=0,height=0,label=""];
+        edge [arrowhead="none", style="dashed"];
+        Rogue -> p3;
+        p1 -> Moria;
+        p2 -> Larn;
+        p3 -> Omega -> p3_0 -> ADOM;
+        p4 -> Hack -> NetHack -> p8;
+        p5 -> Brogue;
+        {rank="same"; p1 -> p2 -> p3 -> p4 -> p5 -> p7}
+        Moria -> Angband -> p6 -> {ToME, ZAngband}
+        p9 -> ADOM;
+        p10 -> ZapM;
+        p11 -> Slashem;
+        p12 -> Crawl;
+        p13 -> RND;
+        p7 -> p14;
+        {rank="same"; p9 -> p10 -> p8 -> p11 -> p12 ->p14 -> p13;
+            p6 -> p3_0 -> p9[style="invis"]}
+
+        dnd_plato -> p15;
+        p16 -> p17 -> Telengard;
+        p18 -> DND -> p19 -> ADND;
+        p20 -> Moria_2 -> Oubliette -> Avatar -> Mordor -> Demise;
+        {rank="same";p16 -> p18 -> p15 -> p20}
+        p21 -> DotND -> RND;
+        {rank="same"; p17 -> p21 -> p19}
+    }
+
+}
