@@ -251,7 +251,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       if (index > 0) {
         backquote_plain = (backquote_plain + (text.slice(0, index).match(regexBackquote)||[]).length) % 2;
         if (dollar_escape !== -1 && text[index - 1] === "\\" && text[index] === "$") {
-          data.push([texdown.tokenType.MARK, text.slice(0, index - 1) + text[index + 1]])
+          data.push([texdown.tokenType.MARK, text.slice(0, index - 1) + text[index]])
           text = text.slice(index + 1);
           continue;
         }
