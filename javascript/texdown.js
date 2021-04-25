@@ -28,9 +28,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (function () {
   'use strict'
 
-  var version = '0.0.1'
-  var markdown
-  var tex
+  var version = '0.0.1';
+  var markdown;
+  var tex;
 
   var texdown = {}
   var options = {}
