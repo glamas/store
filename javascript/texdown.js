@@ -234,7 +234,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     //    1. start text to first delim.left
     //    2. backquote_plain = 1 and the math part
     var backquote_plain = 0;
-    var regexBackquote = new RegExp("^`{3,}\\s*(\\w*\\b)?\\s*$", "gm")
+    //var regexBackquote = new RegExp("^`{3,}\\s*(\\w*\\b)?\\s*$", "gm")
+    var regexBackquote = new RegExp("`", "g")
     var index
     var data = []
     var regexLeft = new RegExp("(" + delimiters.map(function (x) {
@@ -249,11 +250,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
 
       if (index > 0) {
-        backquote_plain = (backquote_plain + (text.slice(0, index).match(regexBackquote)||[]).length) % 2;
-        if (dollar_escape !== -1 && text[index - 1] === "\\" && text[index] === "$") {
-          data.push([texdown.tokenType.MARK, text.slice(0, index - 1) + text[index]])
-          text = text.slice(index + 1);
-          continue;
+        if (dollar_escape !== -1) {
+          backquote_plain = (backquote_plain + (text.slice(0, index).match(regexBackquote)||[]).length) % 2;
+          if (text[index - 1] === "\\" && text[index] === "$") {
+            data.push([texdown.tokenType.MARK, text.slice(0, index - 1) + text[index + 1]])
+            text = text.slice(index + 1);
+            continue;
+          }
         }
         data.push([texdown.tokenType.MARK, text.slice(0, index)])
         text = text.slice(index);
