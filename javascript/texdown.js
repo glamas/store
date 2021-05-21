@@ -235,7 +235,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     //    2. backquote_plain = 1 and the math part
     var backquote_plain = 0;
     //var regexBackquote = new RegExp("^`{3,}\\s*(\\w*\\b)?\\s*$", "gm")
-    var regexBackquote = new RegExp("`", "g")
+    var regexBackquote = new RegExp("[^\\\\]`", "g")
     var index
     var data = []
     var regexLeft = new RegExp("(" + delimiters.map(function (x) {
@@ -253,12 +253,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         if (dollar_escape !== -1) {
           backquote_plain = (backquote_plain + (text.slice(0, index).match(regexBackquote)||[]).length) % 2;
           if (text[index - 1] === "\\" && text[index] === "$") {
-            data.push([texdown.tokenType.MARK, text.slice(0, index - 1) + text[index + 1]])
+            data.push([texdown.tokenType.MARK, text.slice(0, index - 1) + text[index]])
             text = text.slice(index + 1);
             continue;
           }
         }
-        data.push([texdown.tokenType.MARK, text.slice(0, index)])
+        data.push([texdown.tokenType.MARK, dollar_escape !== -1 ? text.slice(0, index) : text.slice(0, index).replace(/\\\$/g, "$")])
         text = text.slice(index);
       }
 
@@ -274,7 +274,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       var rawData = text.slice(0, index + delimiters[i].right.length);
       if (backquote_plain) {
         backquote_plain = (backquote_plain + (text.slice(0, index).match(regexBackquote)||[]).length) % 2;
-        data.push([texdown.tokenType.MARK, text.slice(0, index)])
+        data.push([texdown.tokenType.MARK, dollar_escape !== -1 ? text.slice(0, index) : text.slice(0, index).replace(/\\\$/g, "$")])
         text = text.slice(index);
         continue;
       }
@@ -284,7 +284,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }
 
     if (text !== "") {
-      data.push([texdown.tokenType.MARK, text])
+      data.push([texdown.tokenType.MARK, dollar_escape !== -1 ? text : text.replace(/\\\$/g, "$")])
     }
 
     return data;
