@@ -339,7 +339,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 
   texdown.renderMarkdown = function (s) {
-    return markdown.parse(s, options.marked)
+    return markdown(s, options.marked)
   }
 
   /**
