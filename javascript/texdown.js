@@ -339,7 +339,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 
   texdown.renderMarkdown = function (s) {
-    return markdown(s, options.marked)
+    try{
+      // markjs version > 4.0.0
+      return markdown.parse(s, options.marked)
+    }catch(err){
+      return markdown(s, options.marked)
+    }
   }
 
   /**
