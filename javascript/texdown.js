@@ -340,7 +340,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   texdown.renderMarkdown = function (s) {
     try{
-      // markjs version > 4.0.0
+      // markedjs version > 4.0.0
       return markdown.parse(s, options.marked)
     }catch(err){
       return markdown(s, options.marked)
