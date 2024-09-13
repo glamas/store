@@ -1,5 +1,0 @@
-(defvar sl2 '(:a 1 :b 2 :c 3 :d 4 :e 5 :f 6 :g 7))
-(defun dump-var (ls)
-  (dolist (cd ls)
-    (format t "~{~a: ~10t~a~%~}~%" cd)))
-(defvar lst nil)

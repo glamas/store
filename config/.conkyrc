@@ -1,0 +1,128 @@
+##是否嵌入桌面，yes表示嵌入，no表示不嵌入
+background yes
+
+##边框周围空白，以像素为单位
+#border-margin 5
+
+##边框线的宽度，以像素为单位
+#border_width 2
+
+##使用xft反锯齿
+use_xft yes
+##使用xft字体，设置默认字体
+xftfont monospace:size=9
+##xft字体的开头，必须时一个数值或者0和1
+xftalpha 1
+
+##强制uhf-8编码，需要xft支持
+override_utf8_locale yes
+
+##刷新时间间隔，单位为秒，时间间隔越长，系统负担越轻，监控实时性越差
+update_interval 1.0
+
+##conky运行次数，指刷新的次数，0为永久运行
+total_run_times 0
+
+##创建自主窗口
+own_window yes
+##手动设置WM_CLASS名称，默认为Conky
+#own_window_class
+##设置真透明
+own_window_argb_visual yes
+##设置不透明度，值的范围0-255,0为全透明，255为完全不透明
+own_window_argb_value 72
+##设置真透明度为0,启用时，own_window_argb的两个参数失效
+own_window_transparent yes
+##指定窗口样式为normal，desktop，dock或者override，需要own_window为yes，默认为normal，desktop是指没有装饰、置顶、不显示在pager和taskbar上，出现在所有workspase上的窗口.对于一些桌面系统，点击桌面之后如果消失，设置为conky
+own_window_type conky
+##窗口提示，如果own_window为yes，能得到conky窗口提示，如果用了own_window_type窗口提示会被忽略
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+##如果窗口不透明，设置颜色，默认为黑色
+own_window_colour black
+##最小窗口宽度和高度
+minimum_size 1 1
+##最大窗口宽度
+maximum_width 180
+
+##创建阴影
+draw_shades no
+##默认阴影颜色
+default_shade_color 000000
+
+##创建边缘
+draw_outline no
+##默认边框外缘的颜色
+default_outline_color d9d7d6
+
+##创建字体边框
+draw_borders no
+
+##创建图形边框
+draw_graph_borders no
+
+##默认颜色
+default_color Sandy Brown
+
+##默认进度条的宽度和高度
+#default_bar_size 0 6
+
+##默认频谱框图的宽度和高度
+#default_graph_size 25 25
+
+##缩写单位字符，如kib->k Gib->G 默认off
+short_units yes
+##显示的相对位置，t-top，b-bottem，r-right，l-left，m-middle
+alignment tr
+
+##于屏幕左右边界，上下边界的距离，以像素为单位
+gap_x 12
+gap_y 40
+
+##从内存中清除文件系统缓冲区
+no_buffers yes
+
+##大写变换
+uppercase no
+##cpu数据监控模式，一般选2
+cpu_avg_samples 2
+##网络传输平均数据监控
+net_avg_samples 2
+
+##消除闪烁，需要own_window支持
+double_buffer yes
+
+##预定义颜色，数字从0到9,颜色用16进制表示时，可以省略#号
+color0 white
+color1 orange
+color2 lightgray
+color3 22ccff
+color4 8844ee
+color6 yellow
+color7 greenyellow
+color8 pink
+
+##############################################
+#  Output
+##############################################
+TEXT
+## system info
+${color1}${font 文泉驿正黑:bold:size=8}SYSTEM ${hr 2}
+${color8}${font 文泉驿正黑:normal:size=8}CPU1: ${color3}$alignr${cpu cpu1}%
+${color2}${cpubar cpu1}
+${color8}${font 文泉驿正黑:normal:size=8}CPU2: ${color3}$alignr${cpu cpu2}%
+${color2}${cpubar cpu2}
+${color8}${font 文泉驿正黑:normal:size=8}RAM: ${color3}$alignr$mem/$memmax($memperc%)
+${color2}$membar
+
+## network info
+${color1}${font 文泉驿正黑:bold:size=8}NETWORK ${hr 2}
+${color8}${font 文泉驿正黑:bold:size=8}Wireless:
+${color3}${font 文泉驿正黑:normal:size=8}Up:${color7} ${upspeed wlan0}/s${color2}${goto 100}Down:${color6} ${downspeed wlan0}/s
+${color8}${font 文泉驿正黑:bold:size=8}Wired:
+${color3}${font 文泉驿正黑:normal:size=8}Up:${color7} ${upspeed eth0}/s ${color2}${goto 100}Down:${color6} ${downspeed eth0}/s
+
+## time info
+${color1}${font 文泉驿正黑:bold:size=8}TIME ${hr 2}
+${color3}${font 文泉驿正黑:size=32}${time %R}${color7}${font 文泉驿正黑:size=10}:${time %S}${voffset -20}${offset -14}${color0}${font 文泉驿正黑:size=12}${time %d/%b}${voffset 18}${offset -24}${font 文泉驿正黑:size=10}${time %a}
+${voffset 0}${offset 0}${hr 1}
+${color6}${font 文泉驿正黑:bold:size=10}Uptime:$alignr${color7}$uptime
